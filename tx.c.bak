@@ -15,7 +15,7 @@ void delay(uint count)      //delay
     i--;
     count--;
   }
-} 
+}
 ///////功能:串口初始化,波特率9600，方式1///////
 void Init_Com(void)
 {
