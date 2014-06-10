@@ -1,0 +1,737 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/08/2014  13:11:02  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE main.obj TO ds18b20 RAMSIZE (256)
+
+
+
+
+PROGRAM RECURSIONS REMOVED FROM CALL TREE
+=========================================
++--> ?PR?_DS_PROCESSFUNCCMD?MAIN
+|  | ?PR?DS_CONVERTTEMPCMD?MAIN
+<--+ ?PR?DS_ISPARASITEPOWER?MAIN
+
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  ds18b20 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         _DATA_GROUP_
+                    000CH     0014H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         _BIT_GROUP_
+                    0020H.1   0000H.7                *** GAP ***
+            DATA    0021H     0028H     UNIT         ?DT?MAIN
+            IDATA   0049H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0020H     UNIT         ?PR?_DELAY?MAIN
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     0094H     UNIT         ?PR?MAIN?MAIN
+            CODE    00BAH     008CH     UNIT         ?C_C51STARTUP
+            CODE    0146H     0063H     UNIT         ?PR?SERIAL?MAIN
+            CODE    01A9H     0058H     UNIT         ?C?LIB_CODE
+            CODE    0201H     0052H     UNIT         ?PR?_DS_PROCESSFUNCCMD?MAIN
+            CODE    0253H     003FH     UNIT         ?PR?_DS_READSCRATCHPADCMD?MAIN
+            CODE    0292H     0039H     UNIT         ?PR?_DS_WRITEBIT?MAIN
+            CODE    02CBH     0036H     UNIT         ?PR?_DS_PROCESSROMCMD?MAIN
+            CODE    0301H     0029H     UNIT         ?PR?_DS_WRITESCRATCHPADCMD?MAIN
+            CODE    032AH     0028H     UNIT         ?PR?DS_INIT?MAIN
+            CODE    0352H     0028H     UNIT         ?PR?DS_READROMCMD?MAIN
+            CODE    037AH     0028H     UNIT         ?PR?DS_MATCHROMCMD?MAIN
+            CODE    03A2H     0024H     UNIT         ?PR?DS_READBIT?MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 2
+
+
+            CODE    03C6H     001EH     UNIT         ?PR?_DS_WRITEBYTE?MAIN
+            CODE    03E4H     001DH     UNIT         ?PR?DS_READBYTE?MAIN
+            CODE    0401H     001CH     UNIT         ?PR?DS_CONVERTTEMPCMD?MAIN
+            CODE    041DH     001CH     UNIT         ?PR?DS_COPYSCRATCHPADCMD?MAIN
+            CODE    0439H     001BH     UNIT         ?PR?DS_RECALLEECMD?MAIN
+            CODE    0454H     0017H     UNIT         ?PR?DS_ISPARASITEPOWER?MAIN
+            CODE    046BH     0016H     UNIT         ?PR?COMINIT?MAIN
+            CODE    0481H     0015H     UNIT         ?PR?_ISP_CHECK?MAIN
+            CODE    0496H     000CH     UNIT         ?PR?DS_READPWRSUPPLYCMD?MAIN
+            CODE    04A2H     0008H     UNIT         ?PR?DS_SKIPROMCMD?MAIN
+            CODE    04AAH     0007H     UNIT         ?C_INITSEG
+            CODE    04B1H     0003H     UNIT         ?PR?SOFT_RESET?MAIN
+            CODE    04B4H     0001H     UNIT         ?CO?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   ds18b20 (MAIN)
+
+
+SEGMENT                                    BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT                   START    LENGTH     START    LENGTH
+---------------------------------------------------------------------------
+?PR?SERIAL?MAIN                         -----    -----      -----    -----
+  +--> ?PR?_ISP_CHECK?MAIN
+
+?PR?_ISP_CHECK?MAIN                     -----    -----      -----    -----
+  +--> ?CO?MAIN
+  +--> ?PR?_DELAY?MAIN
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP                           -----    -----      -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                           -----    -----      -----    -----
+  +--> ?PR?COMINIT?MAIN
+  +--> ?PR?_DS_PROCESSROMCMD?MAIN
+  +--> ?PR?_DS_PROCESSFUNCCMD?MAIN
+  +--> ?PR?_DELAY?MAIN
+  +--> ?PR?DS_INIT?MAIN
+  +--> ?PR?DS_ISPARASITEPOWER?MAIN
+
+?PR?_DS_PROCESSROMCMD?MAIN              -----    -----      0009H    0001H
+  +--> ?PR?DS_INIT?MAIN
+  +--> ?PR?DS_READROMCMD?MAIN
+  +--> ?PR?DS_MATCHROMCMD?MAIN
+  +--> ?PR?DS_SKIPROMCMD?MAIN
+
+?PR?DS_INIT?MAIN                        -----    -----      -----    -----
+  +--> ?PR?_DELAY?MAIN
+
+?PR?DS_READROMCMD?MAIN                  -----    -----      000AH    0001H
+  +--> ?PR?_DS_WRITEBYTE?MAIN
+  +--> ?PR?DS_READBYTE?MAIN
+
+?PR?_DS_WRITEBYTE?MAIN                  -----    -----      -----    -----
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 3
+
+
+  +--> ?PR?_DS_WRITEBIT?MAIN
+
+?PR?DS_READBYTE?MAIN                    -----    -----      -----    -----
+  +--> ?PR?DS_READBIT?MAIN
+
+?PR?DS_READBIT?MAIN                     0020H.0  0000H.1    -----    -----
+
+?PR?DS_MATCHROMCMD?MAIN                 -----    -----      000AH    0001H
+  +--> ?PR?_DS_WRITEBYTE?MAIN
+
+?PR?DS_SKIPROMCMD?MAIN                  -----    -----      -----    -----
+  +--> ?PR?_DS_WRITEBYTE?MAIN
+
+?PR?_DS_PROCESSFUNCCMD?MAIN             -----    -----      -----    -----
+  +--> ?PR?DS_CONVERTTEMPCMD?MAIN
+  +--> ?PR?DS_COPYSCRATCHPADCMD?MAIN
+  +--> ?PR?_DS_WRITESCRATCHPADCMD?MAIN
+  +--> ?PR?_DS_READSCRATCHPADCMD?MAIN
+  +--> ?PR?DS_RECALLEECMD?MAIN
+  +--> ?PR?DS_READPWRSUPPLYCMD?MAIN
+
+?PR?DS_CONVERTTEMPCMD?MAIN              -----    -----      0008H    0001H
+  +--> ?PR?_DS_WRITEBYTE?MAIN
+  +--> ?PR?DS_ISPARASITEPOWER?MAIN
+  +--> ?PR?_DELAY?MAIN
+
+?PR?DS_ISPARASITEPOWER?MAIN             -----    -----      -----    -----
+  +--> ?PR?_DS_PROCESSROMCMD?MAIN
+
+?PR?DS_COPYSCRATCHPADCMD?MAIN           -----    -----      0008H    0001H
+  +--> ?PR?_DS_WRITEBYTE?MAIN
+  +--> ?PR?DS_ISPARASITEPOWER?MAIN
+  +--> ?PR?_DELAY?MAIN
+
+?PR?_DS_WRITESCRATCHPADCMD?MAIN         -----    -----      0008H    0004H
+  +--> ?PR?_DS_WRITEBYTE?MAIN
+
+?PR?_DS_READSCRATCHPADCMD?MAIN          -----    -----      0008H    0003H
+  +--> ?PR?_DS_WRITEBYTE?MAIN
+  +--> ?PR?DS_READBYTE?MAIN
+
+?PR?DS_RECALLEECMD?MAIN                 -----    -----      -----    -----
+  +--> ?PR?_DS_WRITEBYTE?MAIN
+  +--> ?PR?DS_READBIT?MAIN
+
+?PR?DS_READPWRSUPPLYCMD?MAIN            -----    -----      -----    -----
+  +--> ?PR?_DS_WRITEBYTE?MAIN
+  +--> ?PR?DS_READBIT?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  ds18b20 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 4
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0201H         PUBLIC        _DS_ProcessFuncCmd
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0454H         PUBLIC        DS_IsParasitePower
+  B:00A8H.7       PUBLIC        EA
+  D:0021H         PUBLIC        gucTxIndex
+  C:0401H         PUBLIC        DS_ConvertTempCmd
+  C:03E4H         PUBLIC        DS_ReadByte
+  C:032AH         PUBLIC        DS_Init
+  D:00A8H         PUBLIC        IE
+  C:0253H         PUBLIC        _DS_ReadScratchpadCmd
+  C:000AH         PUBLIC        _delay
+  B:00A0H.2       PUBLIC        DQ
+  C:03A2H         PUBLIC        DS_ReadBit
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  C:03D0H         PUBLIC        _DS_WriteByte
+  B:0098H.1       PUBLIC        TI
+  D:0022H         PUBLIC        ucRxData
+  C:0301H         PUBLIC        _DS_WriteScratchpadCmd
+  C:02D0H         PUBLIC        _DS_ProcessRomCmd
+  C:0026H         PUBLIC        main
+  C:0292H         PUBLIC        _DS_WriteBit
+  D:0023H         PUBLIC        gucTxBuf
+  C:0481H         PUBLIC        _ISP_Check
+  C:037AH         PUBLIC        DS_MatchRomCmd
+  C:041DH         PUBLIC        DS_CopyScratchpadCmd
+  D:0099H         PUBLIC        SBUF
+  D:0037H         PUBLIC        gsds
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:046BH         PUBLIC        ComInit
+  C:0352H         PUBLIC        DS_ReadRomCmd
+  C:04B1H         PUBLIC        soft_reset
+  D:008DH         PUBLIC        TH1
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  D:00E7H         PUBLIC        ISP_CONTR
+  C:04A2H         PUBLIC        DS_SkipRomCmd
+  B:0088H.6       PUBLIC        TR1
+  C:0496H         PUBLIC        DS_ReadPwrSupplyCmd
+  C:0146H         PUBLIC        Serial
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  C:0439H         PUBLIC        DS_RecallEECmd
+  D:0048H         PUBLIC        gucTxLength
+  D:00D0H         PUBLIC        PSW
+  C:0006H         SYMBOL        L?0123
+  -------         PROC          L?0122
+  -------         ENDPROC       L?0122
+  C:0006H         SYMBOL        L?0123
+  -------         PROC          _DELAY
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 5
+
+
+  D:0006H         SYMBOL        count
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:000AH         LINE#         11
+  C:000AH         LINE#         12
+  C:000AH         LINE#         14
+  C:000EH         LINE#         15
+  C:000EH         LINE#         16
+  C:0012H         LINE#         17
+  C:0012H         LINE#         18
+  C:001BH         LINE#         19
+  C:0020H         LINE#         20
+  C:0022H         LINE#         21
+  -------         ENDPROC       _DELAY
+  -------         PROC          DS_INIT
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:032AH         LINE#         23
+  C:032AH         LINE#         24
+  C:032AH         LINE#         27
+  C:032CH         LINE#         28
+  C:0330H         LINE#         29
+  C:0330H         LINE#         30
+  C:0339H         LINE#         31
+  C:033BH         LINE#         33
+  C:033FH         LINE#         34
+  C:033FH         LINE#         35
+  C:0348H         LINE#         36
+  C:034FH         LINE#         38
+  C:0351H         LINE#         41
+  -------         ENDPROC       DS_INIT
+  -------         PROC          DS_READBIT
+  -------         DO            
+  D:0006H         SYMBOL        i
+  B:0020H.0       SYMBOL        ds_bit
+  -------         ENDDO         
+  C:03A2H         LINE#         44
+  C:03A2H         LINE#         45
+  C:03A2H         LINE#         49
+  C:03A4H         LINE#         50
+  C:03A8H         LINE#         52
+  C:03AAH         LINE#         53
+  C:03AEH         LINE#         54
+  C:03B2H         LINE#         56
+  C:03B6H         LINE#         57
+  C:03BAH         LINE#         58
+  C:03BAH         LINE#         59
+  C:03C3H         LINE#         61
+  C:03C5H         LINE#         62
+  -------         ENDPROC       DS_READBIT
+  -------         PROC          _DS_WRITEBIT
+  D:0007H         SYMBOL        b
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 6
+
+
+  C:0292H         LINE#         64
+  C:0292H         LINE#         65
+  C:0292H         LINE#         67
+  C:0295H         LINE#         68
+  C:0295H         LINE#         69
+  C:0297H         LINE#         70
+  C:029BH         LINE#         71
+  C:029FH         LINE#         72
+  C:02A1H         LINE#         73
+  C:02A5H         LINE#         74
+  C:02A5H         LINE#         75
+  C:02AFH         LINE#         76
+  C:02AFH         LINE#         77
+  C:02B2H         LINE#         78
+  C:02B2H         LINE#         79
+  C:02B4H         LINE#         80
+  C:02B7H         LINE#         81
+  C:02B7H         LINE#         82
+  C:02C0H         LINE#         83
+  C:02C2H         LINE#         84
+  C:02C6H         LINE#         85
+  C:02CAH         LINE#         86
+  C:02CAH         LINE#         87
+  -------         ENDPROC       _DS_WRITEBIT
+  -------         PROC          DS_READBYTE
+  -------         DO            
+  D:0005H         SYMBOL        ucData
+  D:0004H         SYMBOL        i
+  D:0007H         SYMBOL        b
+  -------         ENDDO         
+  C:03E4H         LINE#         89
+  C:03E4H         LINE#         90
+  C:03E4H         LINE#         93
+  C:03E6H         LINE#         94
+  C:03E8H         LINE#         95
+  C:03E8H         LINE#         96
+  C:03EEH         LINE#         97
+  C:03FAH         LINE#         98
+  C:03FEH         LINE#         99
+  C:0400H         LINE#         100
+  -------         ENDPROC       DS_READBYTE
+  C:03CCH         SYMBOL        L?0119
+  -------         PROC          L?0118
+  -------         ENDPROC       L?0118
+  C:03CCH         SYMBOL        L?0119
+  -------         PROC          _DS_WRITEBYTE
+  D:0006H         SYMBOL        ucData
+  -------         DO            
+  D:0003H         SYMBOL        i
+  D:0002H         SYMBOL        b
+  -------         ENDDO         
+  C:03D0H         LINE#         102
+  C:03D2H         LINE#         103
+  C:03D2H         LINE#         106
+  C:03D4H         LINE#         107
+  C:03D4H         LINE#         108
+  C:03D7H         LINE#         109
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 7
+
+
+  C:03DBH         LINE#         110
+  C:03DFH         LINE#         111
+  C:03E3H         LINE#         112
+  -------         ENDPROC       _DS_WRITEBYTE
+  -------         PROC          DS_READROMCMD
+  -------         DO            
+  D:000AH         SYMBOL        i
+  -------         ENDDO         
+  C:0352H         LINE#         114
+  C:0352H         LINE#         115
+  C:0352H         LINE#         117
+  C:0357H         LINE#         118
+  C:035AH         LINE#         119
+  C:035AH         LINE#         120
+  C:036EH         LINE#         121
+  C:0377H         LINE#         122
+  C:0379H         LINE#         123
+  -------         ENDPROC       DS_READROMCMD
+  -------         PROC          DS_MATCHROMCMD
+  -------         DO            
+  D:000AH         SYMBOL        i
+  -------         ENDDO         
+  C:037AH         LINE#         125
+  C:037AH         LINE#         126
+  C:037AH         LINE#         128
+  C:037FH         LINE#         129
+  C:0382H         LINE#         130
+  C:0382H         LINE#         131
+  C:0396H         LINE#         132
+  C:039FH         LINE#         133
+  C:03A1H         LINE#         134
+  -------         ENDPROC       DS_MATCHROMCMD
+  -------         PROC          DS_SKIPROMCMD
+  C:04A2H         LINE#         136
+  C:04A2H         LINE#         137
+  C:04A2H         LINE#         138
+  C:04A7H         LINE#         139
+  C:04A9H         LINE#         140
+  -------         ENDPROC       DS_SKIPROMCMD
+  C:02CBH         SYMBOL        L?0121
+  -------         PROC          L?0120
+  -------         ENDPROC       L?0120
+  C:02CBH         SYMBOL        L?0121
+  -------         PROC          _DS_PROCESSROMCMD
+  D:0007H         SYMBOL        ucRomCmd
+  -------         DO            
+  D:0009H         SYMBOL        status
+  -------         ENDDO         
+  C:02D0H         LINE#         142
+  C:02D0H         LINE#         143
+  C:02D0H         LINE#         144
+  C:02D3H         LINE#         145
+  C:02E8H         LINE#         146
+  C:02E8H         LINE#         147
+  C:02E8H         LINE#         148
+  C:02EDH         LINE#         149
+  C:02EFH         LINE#         151
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 8
+
+
+  C:02EFH         LINE#         152
+  C:02F4H         LINE#         153
+  C:02F6H         LINE#         155
+  C:02F6H         LINE#         156
+  C:02F6H         LINE#         158
+  C:02F6H         LINE#         159
+  C:02F6H         LINE#         161
+  C:02F6H         LINE#         162
+  C:02F9H         LINE#         163
+  C:02FBH         LINE#         165
+  C:02FBH         LINE#         166
+  C:02FEH         LINE#         167
+  C:02FEH         LINE#         168
+  C:02FEH         LINE#         170
+  C:0300H         LINE#         171
+  -------         ENDPROC       _DS_PROCESSROMCMD
+  -------         PROC          DS_ISPARASITEPOWER
+  -------         DO            
+  D:0007H         SYMBOL        ucPwrMode
+  -------         ENDDO         
+  C:0454H         LINE#         173
+  C:0454H         LINE#         174
+  C:0454H         LINE#         176
+  C:0454H         LINE#         177
+  C:0457H         LINE#         178
+  C:045CH         LINE#         179
+  C:045FH         LINE#         180
+  C:0462H         LINE#         181
+  C:0465H         LINE#         182
+  C:0468H         LINE#         183
+  C:046AH         LINE#         184
+  -------         ENDPROC       DS_ISPARASITEPOWER
+  -------         PROC          DS_CONVERTTEMPCMD
+  -------         DO            
+  D:0008H         SYMBOL        status
+  -------         ENDDO         
+  C:0401H         LINE#         186
+  C:0401H         LINE#         187
+  C:0401H         LINE#         188
+  C:0404H         LINE#         189
+  C:0409H         LINE#         190
+  C:040FH         LINE#         191
+  C:040FH         LINE#         192
+  C:0411H         LINE#         193
+  C:0418H         LINE#         194
+  C:041AH         LINE#         195
+  C:041AH         LINE#         197
+  C:041AH         LINE#         198
+  C:041AH         LINE#         199
+  C:041CH         LINE#         200
+  -------         ENDPROC       DS_CONVERTTEMPCMD
+  -------         PROC          DS_COPYSCRATCHPADCMD
+  -------         DO            
+  D:0008H         SYMBOL        status
+  -------         ENDDO         
+  C:041DH         LINE#         202
+  C:041DH         LINE#         203
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 9
+
+
+  C:041DH         LINE#         204
+  C:0420H         LINE#         205
+  C:0425H         LINE#         206
+  C:042BH         LINE#         207
+  C:042BH         LINE#         208
+  C:042DH         LINE#         209
+  C:0434H         LINE#         210
+  C:0436H         LINE#         211
+  C:0436H         LINE#         213
+  C:0436H         LINE#         214
+  C:0436H         LINE#         215
+  C:0438H         LINE#         216
+  -------         ENDPROC       DS_COPYSCRATCHPADCMD
+  -------         PROC          DS_READPWRSUPPLYCMD
+  -------         DO            
+  D:0007H         SYMBOL        ucIsParasitePowered
+  -------         ENDDO         
+  C:0496H         LINE#         218
+  C:0496H         LINE#         219
+  C:0496H         LINE#         221
+  C:0496H         LINE#         222
+  C:049BH         LINE#         223
+  C:04A1H         LINE#         224
+  C:04A1H         LINE#         225
+  -------         ENDPROC       DS_READPWRSUPPLYCMD
+  -------         PROC          DS_RECALLEECMD
+  -------         DO            
+  D:0001H         SYMBOL        i
+  D:0002H         SYMBOL        status
+  -------         ENDDO         
+  C:0439H         LINE#         227
+  C:0439H         LINE#         228
+  C:0439H         LINE#         229
+  C:043BH         LINE#         230
+  C:043DH         LINE#         232
+  C:0442H         LINE#         233
+  C:0448H         LINE#         234
+  C:0448H         LINE#         235
+  C:044EH         LINE#         236
+  C:0451H         LINE#         237
+  C:0451H         LINE#         239
+  C:0453H         LINE#         240
+  -------         ENDPROC       DS_RECALLEECMD
+  -------         PROC          _DS_READSCRATCHPADCMD
+  D:0008H         SYMBOL        ucLength
+  -------         DO            
+  D:0009H         SYMBOL        status
+  D:000AH         SYMBOL        i
+  -------         ENDDO         
+  C:0253H         LINE#         242
+  C:0255H         LINE#         243
+  C:0255H         LINE#         244
+  C:0258H         LINE#         247
+  C:0263H         LINE#         248
+  C:0263H         LINE#         249
+  C:0266H         LINE#         250
+  C:0268H         LINE#         252
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 10
+
+
+  C:0268H         LINE#         253
+  C:026DH         LINE#         254
+  C:0277H         LINE#         255
+  C:0277H         LINE#         256
+  C:028BH         LINE#         257
+  C:028FH         LINE#         258
+  C:028FH         LINE#         259
+  C:0291H         LINE#         260
+  -------         ENDPROC       _DS_READSCRATCHPADCMD
+  -------         PROC          _DS_WRITESCRATCHPADCMD
+  D:0008H         SYMBOL        p
+  -------         DO            
+  D:000BH         SYMBOL        status
+  -------         ENDDO         
+  C:0301H         LINE#         262
+  C:0307H         LINE#         263
+  C:0307H         LINE#         264
+  C:030AH         LINE#         265
+  C:030FH         LINE#         266
+  C:0315H         LINE#         267
+  C:031BH         LINE#         268
+  C:0327H         LINE#         269
+  C:0329H         LINE#         270
+  -------         ENDPROC       _DS_WRITESCRATCHPADCMD
+  -------         PROC          _DS_PROCESSFUNCCMD
+  D:0007H         SYMBOL        ucFuncCmd
+  -------         DO            
+  D:0006H         SYMBOL        status
+  -------         ENDDO         
+  C:0201H         LINE#         272
+  C:0201H         LINE#         273
+  C:0201H         LINE#         274
+  C:0203H         LINE#         275
+  C:021CH         LINE#         276
+  C:021CH         LINE#         277
+  C:021CH         LINE#         278
+  C:0221H         LINE#         279
+  C:0223H         LINE#         281
+  C:0223H         LINE#         282
+  C:0228H         LINE#         283
+  C:022AH         LINE#         285
+  C:022AH         LINE#         286
+  C:0235H         LINE#         287
+  C:0237H         LINE#         289
+  C:0237H         LINE#         290
+  C:023EH         LINE#         291
+  C:0240H         LINE#         293
+  C:0240H         LINE#         294
+  C:0245H         LINE#         295
+  C:0247H         LINE#         297
+  C:0247H         LINE#         298
+  C:024CH         LINE#         299
+  C:024EH         LINE#         301
+  C:024EH         LINE#         302
+  C:0250H         LINE#         303
+  C:0250H         LINE#         304
+  C:0250H         LINE#         305
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 11
+
+
+  C:0252H         LINE#         306
+  -------         ENDPROC       _DS_PROCESSFUNCCMD
+  -------         PROC          COMINIT
+  C:046BH         LINE#         308
+  C:046BH         LINE#         309
+  C:046BH         LINE#         310
+  C:046EH         LINE#         311
+  C:0471H         LINE#         312
+  C:0474H         LINE#         313
+  C:0476H         LINE#         315
+  C:0478H         LINE#         316
+  C:047AH         LINE#         317
+  C:047CH         LINE#         318
+  C:047EH         LINE#         319
+  C:0480H         LINE#         320
+  -------         ENDPROC       COMINIT
+  -------         PROC          MAIN
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:0026H         LINE#         322
+  C:0026H         LINE#         323
+  C:0026H         LINE#         325
+  C:0029H         LINE#         327
+  C:0029H         LINE#         328
+  C:0029H         LINE#         329
+  C:002CH         LINE#         331
+  C:002CH         LINE#         332
+  C:002FH         LINE#         333
+  C:0032H         LINE#         334
+  C:0035H         LINE#         335
+  C:0038H         LINE#         336
+  C:003DH         LINE#         338
+  C:003DH         LINE#         339
+  C:0040H         LINE#         340
+  C:0045H         LINE#         341
+  C:0045H         LINE#         342
+  C:0048H         LINE#         343
+  C:004DH         LINE#         344
+  C:0054H         LINE#         345
+  C:0056H         LINE#         346
+  C:0070H         LINE#         347
+  C:0073H         LINE#         348
+  C:0076H         LINE#         349
+  C:0076H         LINE#         350
+  C:0079H         LINE#         352
+  C:007CH         LINE#         353
+  C:0081H         LINE#         354
+  C:0083H         LINE#         355
+  C:009DH         LINE#         356
+  C:00A0H         LINE#         357
+  C:00A3H         LINE#         358
+  C:00A3H         LINE#         359
+  C:00A6H         LINE#         361
+  C:00ACH         LINE#         362
+  C:00B1H         LINE#         364
+  C:00B4H         LINE#         365
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 12
+
+
+  C:00B7H         LINE#         367
+  -------         ENDPROC       MAIN
+  -------         PROC          SOFT_RESET
+  C:04B1H         LINE#         370
+  C:04B1H         LINE#         371
+  C:04B1H         LINE#         372
+  -------         ENDPROC       SOFT_RESET
+  -------         PROC          _ISP_CHECK
+  D:0007H         SYMBOL        ucChkData
+  -------         DO            
+  C:04B4H         SYMBOL        ucISPCommand
+  -------         ENDDO         
+  C:0481H         LINE#         375
+  C:0481H         LINE#         376
+  C:0481H         LINE#         378
+  C:0489H         LINE#         379
+  C:0489H         LINE#         380
+  C:048BH         LINE#         381
+  C:0492H         LINE#         382
+  C:0495H         LINE#         383
+  C:0495H         LINE#         384
+  -------         ENDPROC       _ISP_CHECK
+  -------         PROC          SERIAL
+  C:0146H         LINE#         387
+  C:015BH         LINE#         389
+  C:015EH         LINE#         390
+  C:015EH         LINE#         391
+  C:0161H         LINE#         392
+  C:0166H         LINE#         393
+  C:0168H         LINE#         395
+  C:016BH         LINE#         396
+  C:016EH         LINE#         397
+  C:0171H         LINE#         398
+  C:0171H         LINE#         399
+  C:0174H         LINE#         400
+  C:0174H         LINE#         401
+  C:0176H         LINE#         402
+  C:0180H         LINE#         403
+  C:0180H         LINE#         404
+  C:018BH         LINE#         405
+  C:0190H         LINE#         408
+  C:0190H         LINE#         409
+  C:0193H         LINE#         410
+  C:0196H         LINE#         411
+  C:0196H         LINE#         412
+  C:0196H         LINE#         413
+  -------         ENDPROC       SERIAL
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        ?C?CLDPTR
+  C:01A9H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:01C2H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/08/2014  13:11:02  PAGE 13
+
+
+  -------         MODULE        ?C?CSTPTR
+  C:01EFH         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+*** WARNING L13: RECURSIVE CALL TO SEGMENT
+    SEGMENT: ?PR?_DS_PROCESSFUNCCMD?MAIN
+    CALLER:  ?PR?DS_ISPARASITEPOWER?MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SOFT_RESET?MAIN
+
+Program Size: data=53.1 xdata=0 code=1205
+LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

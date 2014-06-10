@@ -1,0 +1,448 @@
+C51 COMPILER V9.00   MAIN                                                                  03/08/2014 13:11:02 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          #include <ds18b20.h>
+   2          
+   3          sfr ISP_CONTR = 0xE7;
+   4          
+   5          sbit DQ = P2^2;
+   6          USIGN8 gucTxBuf[20];
+   7          USIGN8 gucTxLength = 0;
+   8          USIGN8 gucTxIndex = 1;
+   9          OBJ_DS18B20 gsds;
+  10          
+  11          void delay(USIGN16 count)    
+  12          {
+  13   1        USIGN16 i;
+  14   1        while(count)
+  15   1        {
+  16   2          i=200;
+  17   2          while(i>0)
+  18   2            i--;
+  19   2          count--;
+  20   2        }
+  21   1      }
+  22          
+  23          USIGN8 DS_Init(void)
+  24          {
+  25   1        USIGN16 i;
+  26   1      
+  27   1        DQ = 0;
+  28   1        i=103;
+  29   1        while(i)
+  30   1          i--;
+  31   1        DQ = 1;
+  32   1      
+  33   1        i = 4;
+  34   1        while(i)
+  35   1          i--; 
+  36   1        delay(1);
+  37   1      //  if(DQ == 0)
+  38   1          return 1;     /*初始化成功*/
+  39   1      //  else
+  40   1      //    return 0;
+  41   1      }
+  42          
+  43          
+  44          bit DS_ReadBit(void)
+  45          {
+  46   1        USIGN16 i;
+  47   1        bit ds_bit;
+  48   1      
+  49   1        DQ = 0;
+  50   1        i++;
+  51   1      
+  52   1        DQ = 1;
+  53   1        i++;
+  54   1        i++;
+  55   1      
+C51 COMPILER V9.00   MAIN                                                                  03/08/2014 13:11:02 PAGE 2   
+
+  56   1        ds_bit = DQ;
+  57   1        i = 8;
+  58   1        while(i)
+  59   1          i--;
+  60   1      
+  61   1        return ds_bit;
+  62   1      }
+  63          
+  64          void DS_WriteBit(USIGN8 b)
+  65          {
+  66   1        USIGN16 i;
+  67   1        if(b == 1)
+  68   1        {
+  69   2          DQ = 0;
+  70   2          i++;
+  71   2          i++;
+  72   2          DQ = 1;
+  73   2          i = 7;
+  74   2          while(i)
+  75   2            i--;
+  76   2        }
+  77   1        else if(b == 0)
+  78   1        {
+  79   2          DQ = 0;
+  80   2          i = 7;
+  81   2          while(i)
+  82   2            i--;
+  83   2          DQ = 1;
+  84   2          i++;
+  85   2          i++;
+  86   2        }
+  87   1      }
+  88          
+  89          USIGN8 DS_ReadByte(void)
+  90          {
+  91   1        USIGN8 ucData, i, b;
+  92   1      
+  93   1        ucData = 0;
+  94   1        for(i = 1; i <= 8; i++)
+  95   1        {
+  96   2          b = DS_ReadBit();
+  97   2          ucData = (b << 7) | (ucData >> 1);
+  98   2        }
+  99   1        return ucData;
+ 100   1      }
+ 101          
+ 102          void DS_WriteByte(USIGN8 ucData)
+ 103          {
+ 104   1        USIGN8 i, b;
+ 105   1      
+ 106   1        for(i = 0; i < 8; i++)
+ 107   1        {
+ 108   2          b = (ucData & 0x01);
+ 109   2          DS_WriteBit(b);
+ 110   2          ucData = ucData >> 1;
+ 111   2        }
+ 112   1      }
+ 113          
+ 114          USIGN8 DS_ReadRomCmd(void)
+ 115          {
+ 116   1        USIGN8 i;
+ 117   1        DS_WriteByte(READ_ROM_COMMAND);
+C51 COMPILER V9.00   MAIN                                                                  03/08/2014 13:11:02 PAGE 3   
+
+ 118   1        for(i = 0; i < 8; i++)
+ 119   1        {
+ 120   2          ((USIGN8*)&gsds)[i] = DS_ReadByte();
+ 121   2        }
+ 122   1        return SUCCESS;
+ 123   1      }
+ 124          
+ 125          USIGN8 DS_MatchRomCmd(void)
+ 126          {
+ 127   1        USIGN8 i;
+ 128   1        DS_WriteByte(MATCH_ROM_COMMAND);
+ 129   1        for(i = 0; i < 8; i++)
+ 130   1        {
+ 131   2          DS_WriteByte(((USIGN8*)&gsds)[i]);
+ 132   2        }
+ 133   1        return SUCCESS;
+ 134   1      }
+ 135          
+ 136          USIGN8 DS_SkipRomCmd(void)
+ 137          {
+ 138   1        DS_WriteByte(SKIP_ROM_COMMAND);
+ 139   1        return SUCCESS;
+ 140   1      }
+ 141          
+ 142          USIGN8 DS_ProcessRomCmd(USIGN8 ucRomCmd)
+ 143          {
+ 144   1        USIGN8 status = SUCCESS;
+ 145   1        switch(ucRomCmd)
+ 146   1        {
+ 147   2        case READ_ROM_COMMAND:
+ 148   2          status = DS_ReadRomCmd();
+ 149   2          break;
+ 150   2      
+ 151   2        case MATCH_ROM_COMMAND:
+ 152   2          status = DS_MatchRomCmd();
+ 153   2          break;
+ 154   2      
+ 155   2        case SEARCH_ROM_COMMAND:
+ 156   2          break;
+ 157   2      
+ 158   2        case ALARM_SEARCH_COMMAND:
+ 159   2          break;
+ 160   2      
+ 161   2        case SKIP_ROM_COMMAND:
+ 162   2          DS_SkipRomCmd();
+ 163   2          break;
+ 164   2      
+ 165   2        default:
+ 166   2          status = FAILED;
+ 167   2          break;
+ 168   2        }
+ 169   1      
+ 170   1        return status;
+ 171   1      }
+ 172          
+ 173          USIGN8 DS_IsParasitePower(void)
+ 174          {
+ 175   1        USIGN8 ucPwrMode; 
+ 176   1        DS_Init();
+ 177   1        DS_ProcessRomCmd(SKIP_ROM_COMMAND);
+ 178   1        ucPwrMode = DS_ProcessFuncCmd(READ_POWER_SUPPLY_COMMAND);
+ 179   1        if(ucPwrMode == 1)/* 返回1:表示DS18B20是外供电模式 */
+C51 COMPILER V9.00   MAIN                                                                  03/08/2014 13:11:02 PAGE 4   
+
+ 180   1          return 0;
+ 181   1        else if(ucPwrMode == 0)/* 返回0:表示DS18B20是寄生供电模式 */
+ 182   1          return 1;
+ 183   1        else return 0xFF; 
+ 184   1      }
+ 185          
+ 186          USIGN8 DS_ConvertTempCmd(void)
+ 187          {
+ 188   1        USIGN8 status = SUCCESS;
+ 189   1        DS_WriteByte(CONVERT_TEMPERATURE_COMMAND);
+ 190   1        if(DS_IsParasitePower())
+ 191   1        {
+ 192   2          DQ = 1;
+ 193   2          delay(1);
+ 194   2          DQ = 0;
+ 195   2        }
+ 196   1        else
+ 197   1        {
+ 198   2        }
+ 199   1        return status;
+ 200   1      }
+ 201          
+ 202          USIGN8 DS_CopyScratchpadCmd(void)
+ 203          {
+ 204   1        USIGN8 status = SUCCESS;
+ 205   1        DS_WriteByte(COPY_SCRATCHPAD_COMMAND);
+ 206   1        if(DS_IsParasitePower())
+ 207   1        {
+ 208   2          DQ = 1;
+ 209   2          delay(1);
+ 210   2          DQ = 0;
+ 211   2        }
+ 212   1        else
+ 213   1        {
+ 214   2        }
+ 215   1        return status;
+ 216   1      }
+ 217          
+ 218          USIGN8 DS_ReadPwrSupplyCmd(void)
+ 219          {
+ 220   1        //USIGN8 status = SUCCESS;
+ 221   1        USIGN8 ucIsParasitePowered = 0; /*'0'表示是寄生供电*/
+ 222   1        DS_WriteByte(READ_POWER_SUPPLY_COMMAND);
+ 223   1        ucIsParasitePowered = DS_ReadBit();
+ 224   1        return ucIsParasitePowered;
+ 225   1      }
+ 226          
+ 227          USIGN8 DS_RecallEECmd(void)
+ 228          {
+ 229   1        USIGN8 i = 10;
+ 230   1        USIGN8 status = SUCCESS;
+ 231   1      
+ 232   1        DS_WriteByte(RECALL_EE_COMMAND);
+ 233   1        while(i--)
+ 234   1        {
+ 235   2            status = DS_ReadBit();
+ 236   2            if(status == 1) /*如果读回的是1，说明拷贝完成*/
+ 237   2              break;
+ 238   2        }
+ 239   1        return status;
+ 240   1      }
+ 241          
+C51 COMPILER V9.00   MAIN                                                                  03/08/2014 13:11:02 PAGE 5   
+
+ 242          USIGN8 DS_ReadScratchpadCmd(USIGN8 ucLength)
+ 243          {
+ 244   1        USIGN8 status = SUCCESS;
+ 245   1        USIGN8 i;
+ 246   1                 
+ 247   1        if(ucLength > 9 || ucLength == 0)
+ 248   1        {
+ 249   2          status = FAILED;
+ 250   2        }
+ 251   1        else
+ 252   1        {
+ 253   2          DS_WriteByte(READ_SCRATCHPAD_COMMAND);
+ 254   2          for(i = 0; i < ucLength; i++)
+ 255   2          {
+ 256   3            ((USIGN8*)&gsds)[i+8] = DS_ReadByte();
+ 257   3          }
+ 258   2        }
+ 259   1        return status;
+ 260   1      }
+ 261          
+ 262          USIGN8 DS_WriteScratchpadCmd(OBJ_DS18B20* p)
+ 263          {
+ 264   1        USIGN8 status = SUCCESS;
+ 265   1        DS_WriteByte(WRITE_SCRATCHPAD_COMMAND);
+ 266   1        DS_WriteByte(p->ucTH);
+ 267   1        DS_WriteByte(p->ucTL);
+ 268   1        DS_WriteByte(p->ucCfg);
+ 269   1        return status;
+ 270   1      }
+ 271          
+ 272          USIGN8 DS_ProcessFuncCmd(USIGN8 ucFuncCmd)
+ 273          {
+ 274   1        USIGN8 status = SUCCESS;
+ 275   1        switch(ucFuncCmd)
+ 276   1        {
+ 277   2        case CONVERT_TEMPERATURE_COMMAND:
+ 278   2          status = DS_ConvertTempCmd();
+ 279   2          break;
+ 280   2      
+ 281   2        case COPY_SCRATCHPAD_COMMAND:
+ 282   2          status = DS_CopyScratchpadCmd();
+ 283   2          break;
+ 284   2      
+ 285   2        case WRITE_SCRATCHPAD_COMMAND:
+ 286   2          status = DS_WriteScratchpadCmd(&gsds);
+ 287   2          break;
+ 288   2      
+ 289   2        case READ_SCRATCHPAD_COMMAND:
+ 290   2          status = DS_ReadScratchpadCmd(9);
+ 291   2          break;
+ 292   2      
+ 293   2        case RECALL_EE_COMMAND:
+ 294   2          status = DS_RecallEECmd();
+ 295   2          break;
+ 296   2      
+ 297   2        case READ_POWER_SUPPLY_COMMAND:
+ 298   2          status = DS_ReadPwrSupplyCmd();
+ 299   2          break;
+ 300   2      
+ 301   2        default:
+ 302   2          status = FAILED;
+ 303   2          break;
+C51 COMPILER V9.00   MAIN                                                                  03/08/2014 13:11:02 PAGE 6   
+
+ 304   2        }
+ 305   1        return status;
+ 306   1      }
+ 307          
+ 308          void ComInit(void)
+ 309          {
+ 310   1        TMOD = 0x20;
+ 311   1        TH1 = 0xFD;
+ 312   1        TL1 = 0xFD;
+ 313   1        TR1 = 1;
+ 314   1      
+ 315   1        SM0 = 0;
+ 316   1        SM1 = 1;
+ 317   1        REN = 1;
+ 318   1        ES = 1;
+ 319   1        EA = 1;
+ 320   1      }
+ 321          
+ 322          void main(void)
+ 323          {
+ 324   1        USIGN8 i;
+ 325   1        ComInit();
+ 326   1      
+ 327   1        while(1)
+ 328   1        {     
+ 329   2          P1 = 0xaa;
+ 330   2      
+ 331   2          DS_Init();
+ 332   2          DS_ProcessRomCmd(SKIP_ROM_COMMAND);
+ 333   2          gsds.ucTH = 0x12;
+ 334   2          gsds.ucTL = 0x34;
+ 335   2          gsds.ucCfg = 0x7F;
+ 336   2          DS_ProcessFuncCmd(WRITE_SCRATCHPAD_COMMAND);
+ 337   2      
+ 338   2          DS_Init();
+ 339   2          DS_ProcessRomCmd(SKIP_ROM_COMMAND);
+ 340   2          DS_ProcessFuncCmd(CONVERT_TEMPERATURE_COMMAND);
+ 341   2          DS_Init();
+ 342   2          DS_ProcessRomCmd(SKIP_ROM_COMMAND);
+ 343   2          DS_ProcessFuncCmd(READ_SCRATCHPAD_COMMAND);
+ 344   2          delay(0xFF);
+ 345   2          for(i = 0; i < 9; i++)
+ 346   2            gucTxBuf[i] = ((USIGN8*)&gsds)[i+8];
+ 347   2          SBUF = gucTxBuf[0];
+ 348   2          gucTxLength = 9;
+ 349   2          gucTxIndex = 1;
+ 350   2          delay(0xFFF); 
+ 351   2      
+ 352   2          DS_Init();
+ 353   2          DS_ProcessRomCmd(READ_ROM_COMMAND);
+ 354   2          for(i = 0; i < 8; i++)
+ 355   2            gucTxBuf[i] = ((USIGN8*)&gsds)[i];
+ 356   2          SBUF = gucTxBuf[0];
+ 357   2          gucTxLength = 8;
+ 358   2          gucTxIndex = 1;
+ 359   2          delay(0xFFF);
+ 360   2      
+ 361   2          if(DS_IsParasitePower()) /*如果是寄生供电模式*/
+ 362   2            SBUF = 0x01;            
+ 363   2          else
+ 364   2            SBUF = 0x00;
+ 365   2          delay(0xFFF);
+C51 COMPILER V9.00   MAIN                                                                  03/08/2014 13:11:02 PAGE 7   
+
+ 366   2      
+ 367   2        }
+ 368   1      }
+ 369          
+ 370          void soft_reset(void)
+ 371          {
+ 372   1        ((void(code*)(void))0x0000)();
+ 373   1      }
+ 374          
+ 375          void ISP_Check(USIGN8 ucChkData)
+ 376          {
+ 377   1        USIGN8 code ucISPCommand = 0x81;
+ 378   1        if(ucChkData == ucISPCommand)
+ 379   1        {
+ 380   2          EA = 0;
+ 381   2          delay(0xFF);
+ 382   2          ISP_CONTR = 0x60; /*软件复位进入ISP下载模式*/
+ 383   2        }
+ 384   1      }
+ 385          
+ 386          USIGN8 ucRxData;
+ 387          void Serial(void) interrupt 4
+ 388          {
+ 389   1        if(RI)
+ 390   1        {
+ 391   2          ucRxData = SBUF;
+ 392   2          ISP_Check(ucRxData);
+ 393   2          RI = 0;
+ 394   2      
+ 395   2          SBUF = ucRxData;
+ 396   2          gucTxLength = 0;
+ 397   2          while(!TI);
+ 398   2        }
+ 399   1        if(TI)
+ 400   1        {
+ 401   2          TI = 0;
+ 402   2          if(gucTxIndex != gucTxLength && gucTxLength != 0)
+ 403   2          {
+ 404   3            SBUF = gucTxBuf[gucTxIndex++];
+ 405   3            while(!TI);
+ 406   3          }
+ 407   2          else
+ 408   2          {
+ 409   3            gucTxIndex = 1;
+ 410   3            gucTxLength = 0;
+ 411   3          }
+ 412   2        }
+ 413   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    963    ----
+   CONSTANT SIZE    =      1    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     40      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
